@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * Draw event holding start and end poitns of coordinates for a rectangle
+ */
 public class RectDrawEvent extends DrawEvent {
     private final EventType type = EventType.RECT_DRAW;
 

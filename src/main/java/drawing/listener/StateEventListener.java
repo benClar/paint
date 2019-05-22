@@ -3,16 +3,14 @@ package drawing.listener;
 import drawing.canvas.CanvasCoordinate;
 import drawing.canvas.ImmutableCanvas;
 import drawing.canvas.MutableCanvas;
-import drawing.event.CanvasGraphicsEvent;
-import drawing.event.CreateStateEvent;
-import drawing.event.Event;
-import drawing.event.EventType;
-import drawing.event.GraphicsEvent;
-import drawing.event.MessageGraphicsEvent;
-import drawing.event.StateDrawEvent;
+import drawing.event.*;
 import drawing.publisher.Publisher;
 import drawing.util.Graphics;
 
+/**
+ * An {@link EventListener} that listens for {@link StateEvent}s and
+ * converts them to other internal events for further processing or takes some action.
+ */
 public class StateEventListener {
 
     private MutableCanvas canvas;

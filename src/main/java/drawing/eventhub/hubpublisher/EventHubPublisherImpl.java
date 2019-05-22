@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Maps events to subscriptions for publication.
+ */
 public class EventHubPublisherImpl implements EventHubPublisher {
 
     private final Map<Class, List<ListenerCallback>> listeners = new HashMap<>();
@@ -31,6 +34,8 @@ public class EventHubPublisherImpl implements EventHubPublisher {
             } catch( Exception e){
                 System.out.println("error whilst processing: " +  e.getMessage());
             }
+        } else {
+            throw new IllegalStateException("No subscribers for " + type);
         }
     }
 }

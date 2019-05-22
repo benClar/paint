@@ -1,4 +1,4 @@
-package drawing.Context;
+package drawing.context;
 
 public interface Context {
 

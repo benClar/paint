@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class TestMutableCanvas {
+public class MutableCanvasTest {
 
     @Test
     public void testMutableCanvasCreate(){

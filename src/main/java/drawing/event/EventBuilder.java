@@ -1,6 +1,9 @@
 package drawing.event;
 
+/**
+ * Event builder base
+ */
 public interface EventBuilder<E extends Event> {
 
-    public E build();
+    E build();
 }

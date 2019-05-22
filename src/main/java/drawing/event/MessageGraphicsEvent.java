@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * Graphics event for message to be displayed to user
+ */
 public class MessageGraphicsEvent extends GraphicsEvent {
 
     private final String message;

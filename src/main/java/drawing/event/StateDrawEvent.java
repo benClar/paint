@@ -5,7 +5,9 @@ import drawing.canvas.CanvasCoordinate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * Holds a series of coordinates to be updated in current canvas
+ */
 public class StateDrawEvent extends StateEvent implements Iterable<CanvasCoordinate>{
     private final List<CanvasCoordinate> coordinates;
 

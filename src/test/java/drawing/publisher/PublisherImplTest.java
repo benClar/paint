@@ -4,7 +4,7 @@ import drawing.event.CreateStateEvent;
 import drawing.event.InputEvent;
 import drawing.event.StateEvent;
 import drawing.eventhub.EventHub;
-import drawing.eventhub.EventHubImpl;
+import drawing.eventhub.SimpleEventHubImpl;
 import drawing.eventhub.hubpublisher.EventHubPublisherImpl;
 import org.junit.Test;
 
@@ -13,17 +13,16 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class PublisherTest {
+public class PublisherImplTest {
 
     @Test
     public void testCreatePublisher(){
-        EventHub eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        new SimpleEventHubImpl(new EventHubPublisherImpl());
     }
-
 
     @Test
     public void testMultiSub(){
-        EventHub eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        EventHub eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         Publisher<StateEvent> stateEventpublisher = new PublisherImpl<>(eventHub, StateEvent.class);
         Publisher<InputEvent> inputEventpublisher = new PublisherImpl<>(eventHub, InputEvent.class);
 

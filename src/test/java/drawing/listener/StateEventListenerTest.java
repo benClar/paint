@@ -3,7 +3,7 @@ package drawing.listener;
 import drawing.event.*;
 import drawing.publisher.Publisher;
 import drawing.eventhub.EventHub;
-import drawing.eventhub.EventHubImpl;
+import drawing.eventhub.SimpleEventHubImpl;
 import drawing.eventhub.hubpublisher.EventHubPublisherImpl;
 import drawing.publisher.PublisherImpl;
 import drawing.util.Graphics;
@@ -21,15 +21,15 @@ public class StateEventListenerTest {
 
     @Before
     public void setup(){
-        eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         Publisher<GraphicsEvent> graphicsEventPublisher = new PublisherImpl<>(eventHub, GraphicsEvent.class);
         stateEventListener = new StateEventListener(graphicsEventPublisher);
+        events = new ArrayList<>();
+        eventHub.subscribe(GraphicsEvent.class, e->events.add(e));
         stateEventListener.onStateEvent(CreateStateEvent.builder()
                 .width(20)
                 .height(5)
                 .build());
-        events = new ArrayList<>();
-        eventHub.subscribe(GraphicsEvent.class, e->events.add(e));
     }
 
     @Test
@@ -41,10 +41,19 @@ public class StateEventListenerTest {
                 .addCoordinate(3, 19)
                 .addCoordinate(3, 20)
         .build());
-        Event result = events.get(0);
+        Event result = events.get(1);
         assertEquals(EventType.MESSAGE, result.getType());
         MessageGraphicsEvent messageEvent = (MessageGraphicsEvent) result;
         assertEquals(messageEvent.getMessage(), Graphics.coordErrorMessage(3, 20, 20, 5));
+        result = events.get(2);
+        CanvasGraphicsEvent canvasEvent = (CanvasGraphicsEvent) result;
+
+        for(int row = 0; row < canvasEvent.getCanvas().getHeight(); row++){
+            for(int column = 0; column < canvasEvent.getCanvas().getWidth(); column++){
+                assertEquals(canvasEvent.getCanvas().get(row, column), 0);
+            }
+        }
+
     }
 
     @Test
@@ -55,10 +64,19 @@ public class StateEventListenerTest {
                 .addCoordinate(4, 16)
                 .addCoordinate(5, 16)
                 .build());
-        Event result = events.get(0);
+        Event result = events.get(1);
         assertEquals(EventType.MESSAGE, result.getType());
         MessageGraphicsEvent messageEvent = (MessageGraphicsEvent) result;
         assertEquals(messageEvent.getMessage(), Graphics.coordErrorMessage(5, 16, 20, 5));
+
+        result = events.get(2);
+        CanvasGraphicsEvent canvasEvent = (CanvasGraphicsEvent) result;
+
+        for(int row = 0; row < canvasEvent.getCanvas().getHeight(); row++){
+            for(int column = 0; column < canvasEvent.getCanvas().getWidth(); column++){
+                assertEquals(canvasEvent.getCanvas().get(row, column), 0);
+            }
+        }
     }
 
     @Test

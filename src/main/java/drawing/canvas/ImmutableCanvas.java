@@ -1,6 +1,6 @@
 package drawing.canvas;
 
-public class ImmutableCanvas extends Canvas{
+public class ImmutableCanvas extends Canvas {
     private final int[][] canvas;
 
     public ImmutableCanvas(Canvas mCanvas) {

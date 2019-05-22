@@ -1,12 +1,12 @@
-package drawing.Context;
+package drawing.context;
 
 import drawing.event.*;
 import drawing.eventhub.EventHub;
-import drawing.eventhub.EventHubImpl;
+import drawing.eventhub.SimpleEventHubImpl;
 import drawing.eventhub.hubpublisher.EventHubPublisherImpl;
 import drawing.listener.DrawEventListener;
 import drawing.listener.GraphicsEventListener;
-import drawing.listener.InterpreterListener;
+import drawing.listener.InputListener;
 import drawing.listener.StateEventListener;
 import drawing.plugin.KeyboardInputPlugin;
 import drawing.plugin.Plugin;
@@ -17,7 +17,7 @@ import drawing.util.Graphics;
 public class ContextImpl implements Context {
 
     public void start() {
-        EventHub eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        EventHub eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         Publisher<StateEvent> stateEventPub = new PublisherImpl<>(eventHub, StateEvent.class);
         Publisher<GraphicsEvent> graphicsEventPub = new PublisherImpl<>(eventHub, GraphicsEvent.class);
         Publisher<InputEvent> inputEventPub = new PublisherImpl<>(eventHub, InputEvent.class);
@@ -25,7 +25,7 @@ public class ContextImpl implements Context {
 
         Plugin keyboardListenerPlugin = new KeyboardInputPlugin(inputEventPub);
 
-        InterpreterListener inputInterpreter = new InterpreterListener(stateEventPub,
+        InputListener inputInterpreter = new InputListener(stateEventPub,
                 graphicsEventPub,
                 drawEventPub);
         StateEventListener stateEventListener = new StateEventListener(graphicsEventPub);

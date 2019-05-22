@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * Event representing information input by user
+ */
 public class InputEvent implements Event {
 
     private final String input;

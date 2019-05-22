@@ -2,6 +2,10 @@ package drawing.event;
 
 import drawing.canvas.Canvas;
 
+
+/**
+ * Holds canvas to be output to screen
+ */
 public class CanvasGraphicsEvent extends GraphicsEvent {
 
     private final EventType type = EventType.CANVAS_GRAPHICS;

@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * Draw action holding start and end coordinates
+ */
 public abstract class DrawEvent implements Event{
     private final int rowStart;
     private final int colStart;

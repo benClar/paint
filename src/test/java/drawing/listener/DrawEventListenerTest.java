@@ -10,7 +10,7 @@ import drawing.event.StateDrawEvent;
 import drawing.event.StateEvent;
 import drawing.publisher.Publisher;
 import drawing.eventhub.EventHub;
-import drawing.eventhub.EventHubImpl;
+import drawing.eventhub.SimpleEventHubImpl;
 import drawing.eventhub.hubpublisher.EventHubPublisherImpl;
 import drawing.publisher.PublisherImpl;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class DrawEventListenerTest {
 
     @Before
     public void setup(){
-        eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         Publisher<StateEvent> stateEventPub = new PublisherImpl<>(eventHub, StateEvent.class);
         Publisher<GraphicsEvent> graphicsEventPublisher = new PublisherImpl<>(eventHub, GraphicsEvent.class);
         drawEventListener = new DrawEventListener(stateEventPub, graphicsEventPublisher);

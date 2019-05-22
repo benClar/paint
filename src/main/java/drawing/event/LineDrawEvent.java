@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * Event representing start and end coordinates for a line to be drawn
+ */
 public class LineDrawEvent extends DrawEvent {
 
     private final EventType type = EventType.LINE_DRAW;

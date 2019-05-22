@@ -1,5 +1,8 @@
 package drawing.event;
 
+/**
+ * New canvas creation
+ */
 public class CreateStateEvent extends StateEvent {
     private final int width;
     private final int height;

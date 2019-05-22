@@ -1,7 +1,7 @@
 package drawing;
 
-import drawing.Context.Context;
-import drawing.Context.ContextImpl;
+import drawing.context.Context;
+import drawing.context.ContextImpl;
 
 class App {
 

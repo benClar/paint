@@ -12,11 +12,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class EventHubTest {
+public class SimpleEventHubImplTest {
 
     @Test
     public void testInputEventPublish(){
-        EventHub eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        EventHub eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         List<Event> events = new ArrayList<>();
         eventHub.subscribe(InputEvent.class, events::add);
         eventHub.put(InputEvent.class, new InputEvent("C 10 20"));
@@ -25,7 +25,7 @@ public class EventHubTest {
 
     @Test
     public void testMultiSubscribers(){
-        EventHub eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        EventHub eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         List<String> events = new ArrayList<>();
         eventHub.subscribe(InputEvent.class,x-> events.add("listener_1"));
         eventHub.subscribe(StateEvent.class, x-> events.add("listener_2"));

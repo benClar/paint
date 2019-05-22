@@ -8,7 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InterpreterListener {
+/**
+ * An {@link EventListener} that listens for {@link InputEvent} and
+ * converts them to internal events for further processing.
+ */
+public class InputListener {
 
     private static final int CMD = 0;
     private static final String CREATE = "C";
@@ -29,9 +33,9 @@ public class InterpreterListener {
     private final Publisher<GraphicsEvent> graphicsEventPublisher;
     private final Publisher<DrawEvent> drawEventPublisher;
 
-    public InterpreterListener(Publisher<StateEvent> stateEventPublisher,
-                               Publisher<GraphicsEvent> graphicsEventPublisher,
-                               Publisher<DrawEvent> drawEventPublisher){
+    public InputListener(Publisher<StateEvent> stateEventPublisher,
+                         Publisher<GraphicsEvent> graphicsEventPublisher,
+                         Publisher<DrawEvent> drawEventPublisher){
         this.stateEventpublisher = stateEventPublisher;
         this.graphicsEventPublisher = graphicsEventPublisher;
         this.drawEventPublisher = drawEventPublisher;

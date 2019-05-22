@@ -1,11 +1,12 @@
 package drawing.listener;
 
-import drawing.event.CanvasGraphicsEvent;
-import drawing.event.Event;
-import drawing.event.EventType;
-import drawing.event.MessageGraphicsEvent;
+import drawing.event.*;
 import drawing.util.Graphics;
 
+/**
+ * An {@link EventListener} that listens for {@link GraphicsEvent} and produces
+ * output to console
+ */
 public class GraphicsEventListener {
 
     public void onGraphicsEvent(Event event){

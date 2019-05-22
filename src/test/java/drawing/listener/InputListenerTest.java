@@ -12,7 +12,7 @@ import drawing.event.RectDrawEvent;
 import drawing.event.StateEvent;
 import drawing.publisher.Publisher;
 import drawing.eventhub.EventHub;
-import drawing.eventhub.EventHubImpl;
+import drawing.eventhub.SimpleEventHubImpl;
 import drawing.eventhub.hubpublisher.EventHubPublisherImpl;
 import drawing.publisher.PublisherImpl;
 import drawing.util.Graphics;
@@ -23,19 +23,19 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class InterpreterListenerTest {
+public class InputListenerTest {
 
-    private InterpreterListener interpreterListener;
+    private InputListener inputListener;
     private EventHub eventHub;
     private ArrayList<Event> events;
 
     @Before
     public void setup(){
-        eventHub = new EventHubImpl(new EventHubPublisherImpl());
+        eventHub = new SimpleEventHubImpl(new EventHubPublisherImpl());
         Publisher<StateEvent> stateEventPub = new PublisherImpl<>(eventHub, StateEvent.class);
         Publisher<GraphicsEvent> graphicsEventPublisher = new PublisherImpl<>(eventHub, GraphicsEvent.class);
         Publisher<DrawEvent> drawEventPublisher = new PublisherImpl<>(eventHub, GraphicsEvent.class);
-        interpreterListener = new InterpreterListener(stateEventPub, graphicsEventPublisher, drawEventPublisher);
+        inputListener = new InputListener(stateEventPub, graphicsEventPublisher, drawEventPublisher);
         events = new ArrayList<>();
         eventHub.subscribe(StateEvent.class, e->events.add(e));
         eventHub.subscribe(GraphicsEvent.class, e->events.add(e));
@@ -44,21 +44,21 @@ public class InterpreterListenerTest {
     @Test
     public void testEmpty(){
         InputEvent event = new InputEvent("");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         assertEquals(events.size(), 0);
     }
 
     @Test
     public void testSpaces(){
         InputEvent event = new InputEvent("     ");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         assertEquals(events.size(), 0);
     }
 
     @Test
     public void testValidCreateEvent(){
         InputEvent event = new InputEvent("C    10    20");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.CREATE, result.getType());
         CreateStateEvent stateEvent = (CreateStateEvent) result;
@@ -69,7 +69,7 @@ public class InterpreterListenerTest {
     @Test
     public void testInValidCreateEvent(){
         InputEvent event = new InputEvent("C       20");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.MESSAGE, result.getType());
         MessageGraphicsEvent messageEvent = (MessageGraphicsEvent) result;
@@ -79,7 +79,7 @@ public class InterpreterListenerTest {
     @Test
     public void testValidRectDrawEvent(){
         InputEvent event = new InputEvent("R   15 2 20 5");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.RECT_DRAW, result.getType());
         RectDrawEvent stateEvent = (RectDrawEvent) result;
@@ -92,7 +92,7 @@ public class InterpreterListenerTest {
     @Test
     public void testValidLineDrawEvent(){
         InputEvent event = new InputEvent("L   1 3 7 3");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.LINE_DRAW, result.getType());
         LineDrawEvent stateEvent = (LineDrawEvent) result;
@@ -105,7 +105,7 @@ public class InterpreterListenerTest {
     @Test
     public void testQuitStateEvent(){
         InputEvent event = new InputEvent("Q");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.STATE_QUIT, result.getType());
     }
@@ -113,7 +113,7 @@ public class InterpreterListenerTest {
     @Test
     public void testIncompleteLineDrawEvent(){
         InputEvent event = new InputEvent("L   1 3 ");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.MESSAGE, result.getType());
         assertEquals(events.size(), 1);
@@ -122,7 +122,7 @@ public class InterpreterListenerTest {
     @Test
     public void testIncompleteRectDrawEvent(){
         InputEvent event = new InputEvent("R  1 3 ");
-        interpreterListener.interpretAndPublish(event);
+        inputListener.interpretAndPublish(event);
         Event result = events.get(0);
         assertEquals(EventType.MESSAGE, result.getType());
         assertEquals(events.size(), 1);

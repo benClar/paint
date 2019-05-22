@@ -3,12 +3,17 @@ package drawing.eventhub;
 import drawing.event.Event;
 import drawing.eventhub.hubpublisher.EventHubPublisher;
 
-public class EventHubImpl implements EventHub {
+/**
+ * Allows subscription for {@link Event}s and distributes {@link Event}s
+ * to subscribers.  Simple hub that passes events straight for publication as
+ * soon as received.
+ */
+public class SimpleEventHubImpl implements EventHub {
 
     private final EventHubPublisher eventPublisher;
 
 
-    public EventHubImpl(EventHubPublisher eventPublisher){
+    public SimpleEventHubImpl(EventHubPublisher eventPublisher){
         this.eventPublisher = eventPublisher;
     }
 

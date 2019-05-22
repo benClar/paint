@@ -2,7 +2,10 @@ package drawing.eventhub;
 
 import drawing.event.Event;
 
+/**
+ * Callback for when event is published
+ */
 public interface ListenerCallback {
 
-    public void call(Event event);
+    void call(Event event);
 }
